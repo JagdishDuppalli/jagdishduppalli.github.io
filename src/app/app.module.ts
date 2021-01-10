@@ -1,14 +1,14 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
+import { AppComponent } from './app.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { HttpModule } from '@angular/http';
+//import { HttpModule } from '@angular/http';
 import { ToastrModule, ToastContainerModule } from 'ngx-toastr';
 import { APP_BASE_HREF, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ComponentsModule } from './components/components.module';
-import { AppComponent } from './app.component';
 import { WebsiteLayoutComponent } from './layouts/website-layout.component';
 import { WebsiteComponent } from './website/website.component';
 import { ScriptService } from './script.service';
@@ -18,7 +18,6 @@ import { AuthGuard } from './_guards/auth.guard';
 import { AuthenticationService } from './_services/authentication.service';
 import { UserService } from './_services/user.service';
 import { MainLayoutComponent } from './layouts/main-layout.component';
-
 
 @NgModule({
   declarations: [
@@ -34,7 +33,7 @@ import { MainLayoutComponent } from './layouts/main-layout.component';
     BrowserAnimationsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    HttpModule,
+    //HttpModule,
     ToastrModule.forRoot({ timeOut: 3000, positionClass: 'toast-top-right', preventDuplicates: true, closeButton: true }),
     ToastContainerModule,
     RouterModule.forRoot([

@@ -18,28 +18,15 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "aot": false,
+            "aot": true,
             "assets": [
               "src/favicon.ico",
               "src/assets"
             ],
             "styles": [
-              "src/styles.css",
-              "node_modules/perfect-scrollbar/css/perfect-scrollbar.css",
-              "src/assets/scss/material-dashboard.scss",
-              "src/assets/css/demo.css",
-              "node_modules/@progress/kendo-theme-default/dist/all.css"
+              "src/styles.css"
             ],
-            "scripts": [
-              "node_modules/jquery/dist/jquery.js",
-              "node_modules/popper.js/dist/umd/popper.js",
-              "node_modules/bootstrap-material-design/dist/js/bootstrap-material-design.min.js",
-              "node_modules/arrive/src/arrive.js",
-              "node_modules/moment/moment.js",
-              "node_modules/perfect-scrollbar/dist/perfect-scrollbar.min.js",
-              "node_modules/bootstrap-notify/bootstrap-notify.js",
-              "node_modules/chartist/dist/chartist.js"
-            ]
+            "scripts": ["node_modules/jquery/dist/jquery.js"]
           },
           "configurations": {
             "production": {
@@ -52,16 +39,14 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "4mb",
+                  "maximumWarning": "2mb",
                   "maximumError": "5mb"
                 },
                 {
@@ -104,7 +89,7 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": ["node_modules/jquery/dist/jquery.js"]
           }
         },
         "lint": {
@@ -131,10 +116,6 @@
               "devServerTarget": "ReyoctoWeb:serve:production"
             }
           }
-        },
-        "deploy": {
-          "builder": "angular-cli-ghpages:deploy",
-          "options": {}
         }
       }
     }

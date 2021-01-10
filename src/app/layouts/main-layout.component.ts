@@ -5,6 +5,7 @@ import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import PerfectScrollbar from 'perfect-scrollbar';
 import * as $ from "jquery";
+import jquery from "jquery";
 
 @Component({
   selector: 'app-main-layout',
