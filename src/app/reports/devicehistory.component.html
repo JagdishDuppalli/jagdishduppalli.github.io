@@ -1,0 +1,324 @@
+<style>
+  .k-calendar .k-month .k-link,
+  .k-calendar .k-calendar-monthview .k-link {
+    width: 2.1em;
+  }
+
+  .k-calendar-infinite .k-calendar-yearview .k-content .k-link,
+  .k-calendar-infinite .k-calendar-yearview .k-content td.k-empty,
+  .k-calendar-infinite .k-calendar-decadeview .k-content .k-link,
+  .k-calendar-infinite .k-calendar-decadeview .k-content td.k-empty,
+  .k-calendar-infinite .k-calendar-centuryview .k-content .k-link,
+  .k-calendar-infinite .k-calendar-centuryview .k-content td.k-empty {
+    width: 3em;
+  }
+
+  .k-grid tr,
+  .k-grid th {
+    font-size: 11px;
+  }
+
+  .table thead tr th {
+    font-size: 12px;
+  }
+
+  .k-content .k-scrollable {
+    display: none;
+  }
+</style>
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-3 col-md-3" style="padding-left: 0px;">
+        <div class="card" style="margin-bottom: 15px;">
+          <div class="card-header card-header-info">
+            <h4 class="card-title">Devices</h4>
+            <p class="card-category">User : {{ currentUser.Login_ID }}</p>
+          </div>
+          <div class="card-body table-responsive">
+            <table class="table table-hover">
+              <thead class="text-info">
+                <th style="padding-left: 0px;">Device Name</th>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="let device of devices"
+                  [class.bg-light]="device.DeviceID == selectedDevice"
+                  (click)="onDeviceSelected(device.DeviceID)"
+                >
+                  <td>{{ device.DeviceName }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-9 col-md-9">
+        <div class="row">
+          <div class="col-lg-3 col-md-3" style="padding-left: 0px;">
+            <div class="card" style="margin-bottom: 15px;">
+              <div class="card-body table-responsive">
+                <table class="table table-hover" style="margin-bottom: 0rem;">
+                  <thead class="text-info">
+                    <th style="padding-left: 0px;">Start Date</th>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style="padding: 0px;">
+                        <kendo-datepicker
+                          [(ngModel)]="startDate"
+                          style="width: 100%;"
+                        >
+                        </kendo-datepicker>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-3" style="padding-left: 0px;">
+            <div class="card" style="margin-bottom: 15px;">
+              <div class="card-body table-responsive">
+                <table class="table table-hover" style="margin-bottom: 0rem;">
+                  <thead class="text-info">
+                    <th style="padding-left: 0px;">End Date</th>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style="padding: 0px;">
+                        <kendo-datepicker
+                          [(ngModel)]="endDate"
+                          style="width: 100%;"
+                        >
+                        </kendo-datepicker>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6" style="padding-left: 0px;">
+            <div class="card" style="margin-bottom: 15px;">
+              <div class="card-body table-responsive" style="padding-top: 0px;">
+                <table class="table table-hover" style="margin-bottom: 0rem;">
+                  <thead class="text-info">
+                    <th style="padding-left: 0px;">
+                      <span style="display: inline-block; margin-top: 15px;"
+                        >Sensors</span
+                      >
+                      <button
+                        kendoButton
+                        (click)="onApply()"
+                        [icon]="'Download'"
+                        style="float: right;"
+                      >
+                        Download
+                      </button>
+                    </th>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style="padding: 0px;">
+                        <kendo-multiselect
+                          [data]="sensorsList"
+                          [(ngModel)]="selectedSensors"
+                          [textField]="'Sensor'"
+                          [valueField]="'ID'"
+                          style="width: 100%;"
+                          (valueChange)="onSensorsChange($event)"
+                        >
+                        </kendo-multiselect>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row" style="padding-right: 12px;">
+          <div class="card" style="margin-bottom: 15px; margin-top: 0px;">
+            <div
+              class="card-body table-responsive"
+              style="padding: 0px;"
+              *ngIf="true"
+            >
+              <table class="table table-hover" style="margin-bottom: 0rem;">
+                <tbody>
+                  <div
+                    *ngIf="false"
+                    id="chartdiv"
+                    style="width: 100%; height: 450px;"
+                  ></div>
+                  <kendo-grid
+                    [kendoGridBinding]="deviceDetails"
+                    [pageable]="true"
+                    [height]="490"
+                  >
+                    <ng-template kendoGridToolbarTemplate>
+                      <button kendoGridPDFCommand icon="file-pdf">
+                        Export to PDF
+                      </button>
+                      <button
+                        type="button"
+                        kendoGridExcelCommand
+                        icon="file-excel"
+                      >
+                        Export to Excel
+                      </button>
+                    </ng-template>
+                    <kendo-grid-column
+                      field="DateEntry"
+                      title="Date"
+                      width="160"
+                    >
+                    </kendo-grid-column>
+                    <kendo-grid-column
+                      field="ParamValueBOD"
+                      title="BOD mg/L"
+                      *ngIf="hasBOD"
+                    >
+                    </kendo-grid-column>
+                    <kendo-grid-column
+                      field="ParamValueCOD"
+                      title="COD mg/L"
+                      *ngIf="hasCOD"
+                    >
+                    </kendo-grid-column>
+                    <kendo-grid-column
+                      field="ParamValuePH"
+                      title="pH"
+                      *ngIf="haspH"
+                    >
+                    </kendo-grid-column>
+                    <kendo-grid-column
+                      field="ParamValueTSS"
+                      title="TSS mg/L"
+                      *ngIf="hasTSS"
+                    >
+                    </kendo-grid-column>
+                    <kendo-grid-column
+                      field="ParamValueNO3"
+                      title="NO3 mg/L"
+                      *ngIf="hasNO3"
+                    >
+                    </kendo-grid-column>
+                    <kendo-grid-column
+                      field="ParamValueFLRate"
+                      title="FRt m3/h"
+                      *ngIf="hasFLRate"
+                    >
+                    </kendo-grid-column>
+                    <kendo-grid-column
+                      field="ParamValueTFLRate"
+                      title="FFRt m3"
+                      *ngIf="hasTFLRate"
+                    >
+                    </kendo-grid-column>
+                    <kendo-grid-column
+                      field="ParamValueORP"
+                      title="ORP mV"
+                      *ngIf="hasORP"
+                    >
+                    </kendo-grid-column>
+                    <ng-template
+                      kendoPagerTemplate
+                      let-totalPages="totalPages"
+                      let-currentPage="currentPage"
+                    >
+                      <div class="col-12" style="text-align: right;">
+                        {{ deviceDetails.length }} records
+                      </div>
+                    </ng-template>
+                    <kendo-grid-pdf
+                      fileName="DeviceData.pdf"
+                      [allPages]="true"
+                      paperSize="A4"
+                      [repeatHeaders]="true"
+                      [landscape]="false"
+                    >
+                      <kendo-grid-pdf-margin
+                        top="2cm"
+                        left="1cm"
+                        right="1cm"
+                        bottom="2cm"
+                      >
+                      </kendo-grid-pdf-margin>
+                      <ng-template
+                        kendoGridPDFTemplate
+                        let-pageNum="pageNum"
+                        let-totalPages="totalPages"
+                      >
+                        <div class="page-template">
+                          <div class="header">
+                            <div style="float: left;">
+                              {{ selectedDeviceName }}
+                            </div>
+                            <div style="float: right; padding-bottom: 3px;">
+                              <img
+                                src="assets/img/logo-sm.jpg"
+                                class="img-fluid rounded"
+                                alt=""
+                              />
+                            </div>
+                          </div>
+                          <div class="footer">
+                            Page {{ pageNum }} of {{ totalPages }}
+                          </div>
+                        </div>
+                      </ng-template>
+                    </kendo-grid-pdf>
+                    <kendo-grid-excel
+                      fileName="DeviceData.xlsx"
+                    ></kendo-grid-excel>
+                  </kendo-grid>
+                </tbody>
+              </table>
+            </div>
+            <!-- <div class="card-body table-responsive" style="padding:0px;" *ngIf="false" style="width: 100%; height: 500px">
+                            <kendo-tabstrip>
+                                <kendo-tabstrip-tab [title]="'BOD'" *ngIf="hasBOD" [selected]="true">
+                                  <ng-template kendoTabContent *ngIf="graphBODData.length > 0">
+                                    <xychart style="height:450px" [chartId]="'chartBOD'" [data]="graphBODData"></xychart>
+                                  </ng-template>
+                                </kendo-tabstrip-tab>
+                                <kendo-tabstrip-tab [title]="'COD'" *ngIf="hasCOD">
+                                  <ng-template kendoTabContent *ngIf="graphCODData.length > 0">
+                                    <xychart style="height:450px" [chartId]="'chartCOD'" [data]="graphCODData"></xychart>
+                                  </ng-template>
+                                </kendo-tabstrip-tab>
+                                <kendo-tabstrip-tab [title]="'pH'" *ngIf="haspH">
+                                  <ng-template kendoTabContent *ngIf="graphPHData.length > 0">
+                                    <xychart style="height:450px" [chartId]="'chartPH'" [data]="graphPHData"></xychart>
+                                  </ng-template>
+                                </kendo-tabstrip-tab>
+                                <kendo-tabstrip-tab [title]="'TSS'" *ngIf="hasTSS">
+                                    <ng-template kendoTabContent *ngIf="graphTSSData.length > 0">
+                                       <xychart style="height:450px" [chartId]="'chartTSS'" [data]="graphTSSData"></xychart>
+                                    </ng-template>
+                                  </kendo-tabstrip-tab>
+                                  <kendo-tabstrip-tab [title]="'NO3'" *ngIf="hasNO3">
+                                    <ng-template kendoTabContent *ngIf="graphNO3Data.length > 0">
+                                        <xychart style="height:450px" [chartId]="'chartNO3'" [data]="graphNO3Data"></xychart>
+                                    </ng-template>
+                                  </kendo-tabstrip-tab>
+                                  <kendo-tabstrip-tab [title]="'FRt'" *ngIf="hasFLRate">
+                                    <ng-template kendoTabContent *ngIf="graphFLRateData.length > 0">
+                                        <xychart style="height:450px" [chartId]="'chartFLRate'" [data]="graphFLRateData"></xychart>
+                                    </ng-template>
+                                  </kendo-tabstrip-tab>
+                                  <kendo-tabstrip-tab [title]="'FFRt'" *ngIf="hasTFLRate">
+                                    <ng-template kendoTabContent *ngIf="graphTFLRateData.length > 0">
+                                        <xychart style="height:450px" [chartId]="'chartTFLRate'" [data]="graphTFLRateData"></xychart>
+                                    </ng-template>
+                                  </kendo-tabstrip-tab>
+                            </kendo-tabstrip>
+                        </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,232 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-3 col-md-3">
+        <div class="card">
+          <div class="card-header card-header-info">
+            <h4 class="card-title">Devices</h4>
+            <p class="card-category">User : {{ currentUser.Login_ID }}</p>
+          </div>
+          <div class="card-body table-responsive">
+            <table class="table table-hover">
+              <thead class="text-info">
+                <th style="padding-left: 0px;">DeviceName</th>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="let device of devices"
+                  (click)="GetDeviceDetails(device.DeviceID)"
+                  [class.bg-light]="device.DeviceID == selectedDevice"
+                >
+                  <td>{{ device.DeviceName }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-9 col-md-9">
+        <div class="row">
+          <div
+            class="col-lg-4 col-md-4 col-sm-4"
+            *ngIf="deviceDetails['Ph'] && deviceDetails.Ph != ''"
+          >
+            <div class="card card-stats" style="height: 125px;">
+              <div class="card-header card-header-info card-header-icon">
+                <div class="card-icon">
+                  <span class="material-icons" style="font-family: auto;"
+                    >Ph</span
+                  >
+                </div>
+                <p class="card-category">{{ deviceDetails.PhUnit }}.</p>
+                <h3 class="card-title">{{ deviceDetails.Ph | number }}</h3>
+              </div>
+              <div class="card-footer">
+                <div class="stats">
+                  <i class="material-icons">date_range</i>
+                  {{ deviceDetails.EntryDate }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="col-lg-4 col-md-4 col-sm-4"
+            *ngIf="deviceDetails['BOD'] && deviceDetails.BOD != ''"
+          >
+            <div class="card card-stats" style="height: 125px;">
+              <div class="card-header card-header-info card-header-icon">
+                <div class="card-icon">
+                  <span class="material-icons" style="font-family: auto;"
+                    >BOD</span
+                  >
+                </div>
+                <p class="card-category">{{ deviceDetails.BODUnit }}.</p>
+                <h3 class="card-title">{{ deviceDetails.BOD | number }}</h3>
+              </div>
+              <div class="card-footer">
+                <div class="stats">
+                  <i class="material-icons">date_range</i>
+                  {{ deviceDetails.EntryDate }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="col-lg-4 col-md-4 col-sm-4"
+            *ngIf="deviceDetails['COD'] && deviceDetails.COD != ''"
+          >
+            <div class="card card-stats" style="height: 125px;">
+              <div class="card-header card-header-info card-header-icon">
+                <div class="card-icon">
+                  <span class="material-icons" style="font-family: auto;"
+                    >COD</span
+                  >
+                </div>
+                <p class="card-category">{{ deviceDetails.CODUnit }}.</p>
+                <h3 class="card-title">{{ deviceDetails.COD | number }}</h3>
+              </div>
+              <div class="card-footer">
+                <div class="stats">
+                  <i class="material-icons">date_range</i>
+                  {{ deviceDetails.EntryDate }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="col-lg-4 col-md-4 col-sm-4"
+            *ngIf="deviceDetails['NO3'] && deviceDetails.NO3 != ''"
+          >
+            <div class="card card-stats" style="height: 125px;">
+              <div class="card-header card-header-info card-header-icon">
+                <div class="card-icon">
+                  <span class="material-icons" style="font-family: auto;"
+                    >NO3</span
+                  >
+                </div>
+                <p class="card-category">{{ deviceDetails.NO3Unit }}.</p>
+                <h3 class="card-title">{{ deviceDetails.NO3 | number }}</h3>
+              </div>
+              <div class="card-footer">
+                <div class="stats">
+                  <i class="material-icons">date_range</i>
+                  {{ deviceDetails.EntryDate }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="col-lg-4 col-md-4 col-sm-4"
+            *ngIf="deviceDetails['TOC'] && deviceDetails.TOC != ''"
+          >
+            <div class="card card-stats" style="height: 125px;">
+              <div class="card-header card-header-info card-header-icon">
+                <div class="card-icon">
+                  <span class="material-icons" style="font-family: auto;"
+                    >TOC</span
+                  >
+                </div>
+                <p class="card-category">{{ deviceDetails.TOCUnit }}.</p>
+                <h3 class="card-title">{{ deviceDetails.TOC | number }}</h3>
+              </div>
+              <div class="card-footer">
+                <div class="stats">
+                  <i class="material-icons">date_range</i>
+                  {{ deviceDetails.EntryDate }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="col-lg-4 col-md-4 col-sm-4"
+            *ngIf="deviceDetails['TSS'] && deviceDetails.TSS != ''"
+          >
+            <div class="card card-stats" style="height: 125px;">
+              <div class="card-header card-header-info card-header-icon">
+                <div class="card-icon">
+                  <span class="material-icons" style="font-family: auto;"
+                    >TSS</span
+                  >
+                </div>
+                <p class="card-category">{{ deviceDetails.TSSUnit }}.</p>
+                <h3 class="card-title">{{ deviceDetails.TSS | number }}</h3>
+              </div>
+              <div class="card-footer">
+                <div class="stats">
+                  <i class="material-icons">date_range</i>
+                  {{ deviceDetails.EntryDate }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="col-lg-4 col-md-4 col-sm-4"
+            *ngIf="deviceDetails['FRt'] && deviceDetails.FRt != ''"
+          >
+            <div class="card card-stats" style="height: 125px;">
+              <div class="card-header card-header-info card-header-icon">
+                <div class="card-icon">
+                  <span class="material-icons" style="font-family: auto;"
+                    >FRt</span
+                  >
+                </div>
+                <p class="card-category">{{ deviceDetails.FRUnit }}.</p>
+                <h3 class="card-title">{{ deviceDetails.FRt | number }}</h3>
+              </div>
+              <div class="card-footer">
+                <div class="stats">
+                  <i class="material-icons">date_range</i>
+                  {{ deviceDetails.EntryDate }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="col-lg-4 col-md-4 col-sm-4"
+            *ngIf="deviceDetails['FFRt'] && deviceDetails.FFRt != ''"
+          >
+            <div class="card card-stats" style="height: 125px;">
+              <div class="card-header card-header-info card-header-icon">
+                <div class="card-icon">
+                  <span class="material-icons" style="font-family: auto;"
+                    >FFRt</span
+                  >
+                </div>
+                <p class="card-category">{{ deviceDetails.FFRUnit }}.</p>
+                <h3 class="card-title">{{ deviceDetails.FFRt | number }}</h3>
+              </div>
+              <div class="card-footer">
+                <div class="stats">
+                  <i class="material-icons">date_range</i>
+                  {{ deviceDetails.EntryDate }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="col-lg-4 col-md-4 col-sm-4"
+            *ngIf="deviceDetails['ORP'] && deviceDetails.ORP != ''"
+          >
+            <div class="card card-stats" style="height: 125px;">
+              <div class="card-header card-header-info card-header-icon">
+                <div class="card-icon">
+                  <span class="material-icons" style="font-family: auto;"
+                    >ORP</span
+                  >
+                </div>
+                <p class="card-category">{{ deviceDetails.ORPUnit }}.</p>
+                <h3 class="card-title">{{ deviceDetails.ORP | number }}</h3>
+              </div>
+              <div class="card-footer">
+                <div class="stats">
+                  <i class="material-icons">date_range</i>
+                  {{ deviceDetails.EntryDate }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
